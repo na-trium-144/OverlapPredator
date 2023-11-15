@@ -21,6 +21,8 @@ from lib.benchmark_utils import ransac_pose_estimation, to_o3d_pcd, get_blue, ge
 from lib.trainer import Trainer
 from lib.loss import MetricLoss
 import shutil
+import laspy
+import random
 setup_seed(0)
 
 
@@ -42,29 +44,75 @@ class ThreeDMatchDemo(Dataset):
     def __len__(self):
         return 1
 
-    def __getitem__(self,item): 
+    def __getitem__(self,item):
+        print(f"Reading item {item}...")
         # get pointcloud
-        src_pcd = torch.load(self.src_path).astype(np.float32)
-        tgt_pcd = torch.load(self.tgt_path).astype(np.float32)   
-        
-        
-        #src_pcd = o3d.io.read_point_cloud(self.src_path)
-        #tgt_pcd = o3d.io.read_point_cloud(self.tgt_path)
-        #src_pcd = src_pcd.voxel_down_sample(0.025)
-        #tgt_pcd = tgt_pcd.voxel_down_sample(0.025)
-        #src_pcd = np.array(src_pcd.points).astype(np.float32)
-        #tgt_pcd = np.array(tgt_pcd.points).astype(np.float32)
+        # src_pcd = torch.load(self.src_path).astype(np.float32)
+        # tgt_pcd = torch.load(self.tgt_path).astype(np.float32)
 
+        # Read .las or .laz file using laspy
+        def read_las_file(file_path, max_points=2500):
+            print(f"Reading LAS/LAZ file from {file_path} with a maximum of {max_points} points...")
 
-        src_feats=np.ones_like(src_pcd[:,:1]).astype(np.float32)
-        tgt_feats=np.ones_like(tgt_pcd[:,:1]).astype(np.float32)
+            with laspy.open(file_path) as file:
+                total_points = file.header.point_count
+                print(f"Total points in file: {total_points}")
 
-        # fake the ground truth information
+                # Read the entire file
+                las = file.read()
+
+                # If total points is less than max_points, return all points
+                if total_points <= max_points:
+                    return np.vstack((las.x, las.y, las.z)).transpose()
+
+                # Otherwise, randomly sample points
+                sampled_indices = np.random.choice(total_points, max_points, replace=False)
+                sampled_points = np.vstack(
+                    (las.x[sampled_indices], las.y[sampled_indices], las.z[sampled_indices])).transpose()
+
+                print(f"Read {len(sampled_points)} points from the LAS/LAZ file.")
+                return sampled_points
+
+        # Usage in the __getitem__ method
+        def read_point_cloud(file_path, max_points=2500):
+            if file_path.endswith('.las') or file_path.endswith('.laz'):
+                return read_las_file(file_path, max_points)
+            else:
+                print(f"Reading point cloud from {file_path} using Open3D...")
+                pcd = o3d.io.read_point_cloud(file_path)
+                print("Point cloud read successfully.")
+                return np.asarray(pcd.points)
+
+        # Use the appropriate method to read point clouds
+        src_pcd = read_point_cloud(self.src_path)
+        tgt_pcd = read_point_cloud(self.tgt_path)
+
+        # Convert to Open3D point cloud for voxel_down_sample
+        print("Converting source and target point clouds for voxel down sampling...")
+        src_o3d_pcd = o3d.geometry.PointCloud()
+        tgt_o3d_pcd = o3d.geometry.PointCloud()
+        src_o3d_pcd.points = o3d.utility.Vector3dVector(src_pcd)
+        tgt_o3d_pcd.points = o3d.utility.Vector3dVector(tgt_pcd)
+
+        src_o3d_pcd = src_o3d_pcd.voxel_down_sample(0.025)
+        tgt_o3d_pcd = tgt_o3d_pcd.voxel_down_sample(0.025)
+        print("Voxel down sampling completed.")
+
+        # Convert back to numpy array
+        src_pcd = np.asarray(src_o3d_pcd.points).astype(np.float32)
+        tgt_pcd = np.asarray(tgt_o3d_pcd.points).astype(np.float32)
+
+        # Remaining code is unchanged
+        src_feats = np.ones_like(src_pcd[:, :1]).astype(np.float32)
+        tgt_feats = np.ones_like(tgt_pcd[:, :1]).astype(np.float32)
+
+        # Fake the ground truth information
         rot = np.eye(3).astype(np.float32)
-        trans = np.ones((3,1)).astype(np.float32)
-        correspondences = torch.ones(1,2).long()
+        trans = np.ones((3, 1)).astype(np.float32)
+        correspondences = torch.ones(1, 2).long()
 
-        return src_pcd,tgt_pcd,src_feats,tgt_feats,rot,trans, correspondences, src_pcd, tgt_pcd, torch.ones(1)
+        print("Returning data for item.")
+        return src_pcd, tgt_pcd, src_feats, tgt_feats, rot, trans, correspondences, src_pcd, tgt_pcd, torch.ones(1)
 
 def lighter(color, percent):
     '''assumes color is rgb between (0, 0, 0) and (1,1,1)'''
@@ -200,7 +248,7 @@ if __name__ == '__main__':
     config = edict(config)
     config.gpu_mode = False
     if config.gpu_mode:
-        config.device = torch.device('cuda')
+        config.device = torch.device('cuda:0')
     else:
         config.device = torch.device('cpu')
     
