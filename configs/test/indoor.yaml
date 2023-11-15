@@ -1,7 +1,7 @@
 misc:
   exp_dir: indoor
   mode: test
-  gpu_mode: True
+  gpu_mode: False
   verbose: True
   verbose_freq: 1000
   snapshot_freq: 1

@@ -72,7 +72,7 @@ class Trainer(object):
 
     def _load_pretrain(self, resume):
         if os.path.isfile(resume):
-            state = torch.load(resume)
+            state = torch.load(resume, map_location='cpu')
             self.model.load_state_dict(state['state_dict'])
             self.start_epoch = state['epoch']
             self.scheduler.load_state_dict(state['scheduler'])
