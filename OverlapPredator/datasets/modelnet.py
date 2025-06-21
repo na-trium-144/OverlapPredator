@@ -7,9 +7,9 @@ import numpy as np
 import open3d as o3d
 from torch.utils.data import Dataset
 
-import datasets.transforms as Transforms
-import common.math.se3 as se3
-from lib.benchmark_utils import get_correspondences, to_o3d_pcd, to_tsfm
+import OverlapPredator.datasets.transforms as Transforms
+import OverlapPredator.common.math.se3 as se3
+from OverlapPredator.lib.benchmark_utils import get_correspondences, to_o3d_pcd, to_tsfm
   
 
 def get_train_datasets(args: argparse.Namespace):

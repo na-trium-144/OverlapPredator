@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 from copy import deepcopy
 import torch.utils.checkpoint as checkpoint
-from lib.utils import square_distance
+from OverlapPredator.lib.utils import square_distance
 
 
 def get_graph_feature(coords, feats, k=10):

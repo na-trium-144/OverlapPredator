@@ -19,9 +19,9 @@ import torch
 import torch.nn as nn
 from torch.nn.parameter import Parameter
 from torch.nn.init import kaiming_uniform_
-from kernels.kernel_points import load_kernels
+from OverlapPredator.kernels.kernel_points import load_kernels
 
-from lib.ply import write_ply
+from OverlapPredator.lib.ply import write_ply
 
 
 def gather(x, idx, method=2):

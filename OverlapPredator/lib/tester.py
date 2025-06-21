@@ -1,14 +1,14 @@
-from lib.trainer import Trainer
+from OverlapPredator.lib.trainer import Trainer
 import os, torch
 from tqdm import tqdm
 import numpy as np
-from lib.benchmark_utils import ransac_pose_estimation, random_sample, get_angle_deviation, to_o3d_pcd, to_array
+from OverlapPredator.lib.benchmark_utils import ransac_pose_estimation, random_sample, get_angle_deviation, to_o3d_pcd, to_array
 import open3d as o3d
 
 # Modelnet part
-from common.math_torch import se3
-from common.math.so3 import dcm2euler
-from common.misc import prepare_logger
+from OverlapPredator.common.math_torch import se3
+from OverlapPredator.common.math.so3 import dcm2euler
+from OverlapPredator.common.misc import prepare_logger
 from collections import defaultdict
 import coloredlogs
 

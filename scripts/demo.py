@@ -13,13 +13,13 @@ import open3d as o3d
 
 cwd = os.getcwd()
 sys.path.append(cwd)
-from datasets.indoor import IndoorDataset
-from datasets.dataloader import get_dataloader
-from models.architectures import KPFCNN
-from lib.utils import load_obj, setup_seed,natural_key, load_config
-from lib.benchmark_utils import ransac_pose_estimation, to_o3d_pcd, get_blue, get_yellow, to_tensor
-from lib.trainer import Trainer
-from lib.loss import MetricLoss
+from OverlapPredator.datasets.indoor import IndoorDataset
+from OverlapPredator.datasets.dataloader import get_dataloader
+from OverlapPredator.models.architectures import KPFCNN
+from OverlapPredator.lib.utils import load_obj, setup_seed,natural_key, load_config
+from OverlapPredator.lib.benchmark_utils import ransac_pose_estimation, to_o3d_pcd, get_blue, get_yellow, to_tensor
+from OverlapPredator.lib.trainer import Trainer
+from OverlapPredator.lib.loss import MetricLoss
 import shutil
 setup_seed(0)
 

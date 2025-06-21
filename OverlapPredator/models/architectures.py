@@ -1,8 +1,8 @@
-from models.blocks import *
+from OverlapPredator.models.blocks import *
 import torch.nn.functional as F
 import numpy as np
-from models.gcn import GCN
-from lib.utils import square_distance
+from OverlapPredator.models.gcn import GCN
+from OverlapPredator.lib.utils import square_distance
 
 
 class KPFCNN(nn.Module):

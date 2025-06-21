@@ -9,7 +9,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import numpy as np
-from lib.utils import square_distance
+from OverlapPredator.lib.utils import square_distance
 from sklearn.metrics import precision_recall_fscore_support
 
 class MetricLoss(nn.Module):

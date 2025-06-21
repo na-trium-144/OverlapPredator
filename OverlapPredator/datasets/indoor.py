@@ -8,7 +8,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 from torch.utils.data import Dataset
 import open3d as o3d
-from lib.benchmark_utils import to_o3d_pcd, to_tsfm, get_correspondences
+from OverlapPredator.lib.benchmark_utils import to_o3d_pcd, to_tsfm, get_correspondences
 
 
 class IndoorDataset(Dataset):

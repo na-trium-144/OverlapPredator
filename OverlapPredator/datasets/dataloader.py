@@ -2,13 +2,13 @@ import open3d as o3d
 import numpy as np
 from functools import partial
 import torch
-import cpp_wrappers.cpp_subsampling.grid_subsampling as cpp_subsampling
-import cpp_wrappers.cpp_neighbors.radius_neighbors as cpp_neighbors
-from lib.timer import Timer
-from lib.utils import load_obj, natural_key
-from datasets.indoor import IndoorDataset
-from datasets.kitti import KITTIDataset
-from datasets.modelnet import get_train_datasets, get_test_datasets
+import OverlapPredator.cpp_wrappers.cpp_subsampling.grid_subsampling as cpp_subsampling
+import OverlapPredator.cpp_wrappers.cpp_neighbors.radius_neighbors as cpp_neighbors
+from OverlapPredator.lib.timer import Timer
+from OverlapPredator.lib.utils import load_obj, natural_key
+from OverlapPredator.datasets.indoor import IndoorDataset
+from OverlapPredator.datasets.kitti import KITTIDataset
+from OverlapPredator.datasets.modelnet import get_train_datasets, get_test_datasets
 
 
 def batch_grid_subsampling_kpconv(points, batches_len, features=None, labels=None, sampleDl=0.1, max_p=0, verbose=0, random_grid_orient=True):

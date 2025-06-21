@@ -10,10 +10,10 @@ cwd = os.getcwd()
 sys.path.append(cwd)
 from tqdm import tqdm
 import numpy as np
-from lib.utils import load_obj, natural_key,setup_seed 
-from lib.benchmark_utils import ransac_pose_estimation, get_inlier_ratio, get_scene_split, write_est_trajectory
+from OverlapPredator.lib.utils import load_obj, natural_key,setup_seed 
+from OverlapPredator.lib.benchmark_utils import ransac_pose_estimation, get_inlier_ratio, get_scene_split, write_est_trajectory
 import open3d as o3d
-from lib.benchmark import read_trajectory, write_trajectory, benchmark
+from OverlapPredator.lib.benchmark import read_trajectory, write_trajectory, benchmark
 import argparse
 setup_seed(0)
 

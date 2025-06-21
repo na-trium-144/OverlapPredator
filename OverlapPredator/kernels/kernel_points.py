@@ -19,7 +19,7 @@ import time
 import numpy as np
 from os import makedirs
 from os.path import join, exists
-from lib.ply import read_ply, write_ply
+from OverlapPredator.lib.ply import read_ply, write_ply
 
 
 # ------------------------------------------------------------------------------------------

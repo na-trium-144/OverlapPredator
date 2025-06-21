@@ -2,12 +2,12 @@ import os, torch, time, shutil, json, glob, argparse, shutil
 import numpy as np
 from easydict import EasyDict as edict
 
-from datasets.dataloader import get_dataloader, get_datasets
-from models.architectures import KPFCNN
-from lib.utils import setup_seed, load_config
-from lib.tester import get_trainer
-from lib.loss import MetricLoss
-from configs.models import architectures
+from OverlapPredator.datasets.dataloader import get_dataloader, get_datasets
+from OverlapPredator.models.architectures import KPFCNN
+from OverlapPredator.lib.utils import setup_seed, load_config
+from OverlapPredator.lib.tester import get_trainer
+from OverlapPredator.lib.loss import MetricLoss
+from OverlapPredator.configs.models import architectures
 
 import warnings
 from sklearn.exceptions import UndefinedMetricWarning

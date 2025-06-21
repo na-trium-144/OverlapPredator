@@ -7,8 +7,8 @@ from scipy.stats import special_ortho_group
 import torch
 import torch.utils.data
 
-import common.math.se3 as se3
-import common.math.so3 as so3
+import OverlapPredator.common.math.se3 as se3
+import OverlapPredator.common.math.so3 as so3
 
 def uniform_2_sphere(num: int = None):
     """Uniform sampling on a 2-sphere

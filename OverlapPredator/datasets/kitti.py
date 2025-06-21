@@ -6,7 +6,7 @@ from scipy.spatial.transform import Rotation
 
 # Dataset parent class
 from torch.utils.data import Dataset
-from lib.benchmark_utils import to_tsfm, to_o3d_pcd, get_correspondences
+from OverlapPredator.lib.benchmark_utils import to_tsfm, to_o3d_pcd, get_correspondences
 
 
 class KITTIDataset(Dataset):

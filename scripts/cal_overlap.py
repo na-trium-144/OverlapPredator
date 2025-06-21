@@ -3,7 +3,7 @@ We use this script to calculate the overlap ratios for all the train/test fragme
 """
 import os,sys,glob
 import open3d as o3d
-from lib.utils import natural_key
+from OverlapPredator.lib.utils import natural_key
 import numpy as np
 from tqdm import tqdm
 import multiprocessing as mp
